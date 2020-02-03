@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+  springboot:
+    build: .
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/convida
+    container_name: convida2
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongo
+    links:
+      - mongo
+  mongo:
+    image: mongo
+    container_name: convida-mongodb
