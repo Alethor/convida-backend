@@ -61,4 +61,7 @@ public class UserService {
         newUser.setBirth(user.getBirth());
     }
 
+    public void delete(String id){
+        repo.deleteById(id);
+    }
 }

@@ -13,4 +13,4 @@ services:
       - mongo
   mongo:
     image: mongo
-    container_name: convida-mongodb
+    container_name: convida-mongodb1

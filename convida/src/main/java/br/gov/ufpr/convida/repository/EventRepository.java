@@ -21,25 +21,29 @@ public interface EventRepository extends MongoRepository<Event, String>{
 
     List<Event> findMyEventsByAuthor(String text);
 
-    @Query("{$and: [{'name':{$regex: ?0, $options: 'i'}}, {'type': {$regex: ?1, $options: 'i'}}]}")
+    @Query("{$and:[{'active': true}, {'name':{$regex: ?0, $options: 'i'}}, {'type': {$regex: ?1, $options: 'i'}}]}")
     List<Event> findByNameType(String text, String type);
 
     //@Query("{'dateEnd' : {$gte : ?0}}")
     List<Event> findByDateEndGreaterThanEqual(Date date);
 
-    @Query("{$and: [{'dateStart':{$lte: ?0}}, {'dateEnd': {$gte: ?0}}]}")
+    @Query("{$and: [{'active': true}],[{'dateStart':{$lte: ?0}}, {'dateEnd': {$gte: ?0}}]}")
     List<Event> findToday(Date date);
 
-    @Query("{$or:[{'type':{$regex: ?0}},{'type': {$regex: ?1}},{'type': {$regex: ?2}},{'type': {$regex: ?3}},{'type': {$regex: ?4}},{'type': {$regex: ?5}}]}")
-    List<Event> findByMultType(String text, String text1, String text2, String text3, String text4, String text5);
+    @Query("{$and: [{'active': true}]},{$or:[{'type':{$regex: ?0}},{'type': {$regex: ?1}},{'type': {$regex: ?2}},{'type': {$regex: ?3}},{'type': {$regex: ?4}},{'type': {$regex: ?5}}, {'type': {$regex: ?6}}]}")
+    List<Event> findByMultType(String text, String text1, String text2, String text3, String text4, String text5, String text6);
 
-    @Query("{$and: [{'dateStart':{$lt: ?1}}, {'dateStart':{$gte: ?0}}, {'dateEnd': {$lte: ?1}}]}")
+    @Query("{$and: [{'active': true}],[{'dateStart':{$lt: ?1}}, {'dateStart':{$gte: ?0}}, {'dateEnd': {$lte: ?1}}]}")
     List<Event> findWeek(Date minDate, Date maxDate);
 
-    @Query("{$and: [{$and: [{'dateStart':{$lt: ?1}}, {'dateStart':{$gte: ?0}}, {'dateEnd': {$lte: ?1}}]},{$or:[{'type':{$regex: ?2}},{'type': {$regex: ?3}},{'type': {$regex: ?4}},{'type': {$regex: ?5}},{'type': {$regex: ?6}},{'type': {$regex: ?7}}]}]}")
-    List<Event> findWeekType(Date minDate, Date maxDate, String text, String text1, String text2, String text3, String text4, String text5);
+    @Query("{$and: [{'active': true}],[{$and: [{'dateStart':{$lt: ?1}}, {'dateStart':{$gte: ?0}}, {'dateEnd': {$lte: ?1}}]},{$or:[{'type':{$regex: ?2}},{'type': {$regex: ?3}},{'type': {$regex: ?4}},{'type': {$regex: ?5}},{'type': {$regex: ?6}},{'type': {$regex: ?7}}, {'type': {$regex: ?8}}]}]}")
+    List<Event> findWeekType(Date minDate, Date maxDate, String text, String text1, String text2, String text3, String text4, String text5,String text6);
 
-    @Query("{$and: [{$and: [{'dateStart':{$lte: ?0}}, {'dateEnd': {$gte: ?0}}]},{$or:[{'type':{$regex: ?1}},{'type': {$regex: ?2}},{'type': {$regex: ?3}},{'type': {$regex: ?4}},{'type': {$regex: ?5}},{'type': {$regex: ?6}}]}]}")
-    List<Event> findTodayType(Date minDate, String text, String text1, String text2, String text3, String text4, String text5);
+    @Query("{$and: [{'active': true}], [{$and: [{'dateStart':{$lte: ?0}}, {'dateEnd': {$gte: ?0}}]},{$or:[{'type':{$regex: ?1}},{'type': {$regex: ?2}},{'type': {$regex: ?3}},{'type': {$regex: ?4}},{'type': {$regex: ?5}},{'type': {$regex: ?6}}, {'type': {$regex: ?7}}]}]}")
+    List<Event> findTodayType(Date minDate, String text, String text1, String text2, String text3, String text4, String text5,String text6);
 
+    @Query("{'active': true}")
+    List<Event> findAll();
+
+    List<Event> findByReportsNotNull();
 }

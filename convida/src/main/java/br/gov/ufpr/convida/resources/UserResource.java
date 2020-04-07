@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.gov.ufpr.convida.config.SendEmail;
 import br.gov.ufpr.convida.domain.AccountCredentials;
 import br.gov.ufpr.convida.domain.Bfav;
 import br.gov.ufpr.convida.domain.Event;
@@ -36,6 +38,11 @@ public class UserResource {
 
     @Autowired
     PasswordEncoder bcrypt;
+
+    @Autowired
+    private SendEmail email;
+
+   
 
 
     @GetMapping
@@ -71,6 +78,12 @@ public class UserResource {
         return ResponseEntity.ok().body(x);  
 
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteuser(@PathVariable String id){
+        service.delete(id);
+        return ResponseEntity.status(200).build();
+    }
     
 
 
@@ -104,6 +117,28 @@ public class UserResource {
         
     }
 
+    @PostMapping(value ="/recovery")
+    public ResponseEntity<Void> recovery(@RequestBody AccountCredentials a) throws ObjectNotFoundException{
+
+        User u = service.findById(a.getUsername());
+
+        if(u!= null){
+                Random r = new Random();
+                Integer nPass = r.nextInt(99999);
+                String s = "convida" + nPass.toString();
+
+
+                email.sendEmail(u.getEmail(), s);
+
+                u.setPassword(s);
+                service.update(u);
+
+                return ResponseEntity.noContent().build();
+        }else{
+            System.out.println("-------------- o erro ta nesse outro if, o de fora --------------");
+            return ResponseEntity.status(401).build();
+        }
+    }
 
     @PostMapping(value = "/rfav")
     public ResponseEntity<Void> delete(@RequestBody Bfav ids) throws ObjectNotFoundException {

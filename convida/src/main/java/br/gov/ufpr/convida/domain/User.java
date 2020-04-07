@@ -20,6 +20,7 @@ public class User implements Serializable{
     private String password;
     private String email;
     private Date birth;
+    private Boolean adm = false;
 
     @DBRef(lazy = true)
     private List<Event> fav = new ArrayList<>();
@@ -87,6 +88,20 @@ public class User implements Serializable{
     public void setFav(List<Event> fav) {
         this.fav = fav;
     }
+
+    public boolean isAdm() {
+        return this.adm;
+    }
+
+    public boolean getAdm() {
+        return this.adm;
+    }
+
+    public void setAdm(Boolean adm) {
+        this.adm = adm;
+    }
+
+
 
 
     @Override
