@@ -169,7 +169,7 @@ public class EventResource {
 
 
         
-        List<Event> events = service.findByMultType(text, text1,text2,text3,text4,text5,text6, text7);
+        List<Event> events = service.findByMultType(text, text1,text2,text3,text4,text5,text6,text7);
         return ResponseEntity.ok().body(events);           
     }
 
