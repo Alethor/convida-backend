@@ -155,7 +155,8 @@ public class EventResource {
     @RequestParam(value = "text3", defaultValue = "") String text3,
     @RequestParam(value = "text4", defaultValue = "") String text4,
     @RequestParam(value = "text5", defaultValue = "") String text5,
-    @RequestParam(value = "text6", defaultValue = "") String text6){
+    @RequestParam(value = "text6", defaultValue = "") String text6,
+    @RequestParam(value = "text7", defaultValue = "") String text7){
             
         text = Search.decode(text);
         text1 = Search.decode(text1);
@@ -164,10 +165,11 @@ public class EventResource {
         text4 = Search.decode(text4);
         text5 = Search.decode(text5);
         text6 = Search.decode(text6);
+        text7 = Search.decode(text7);
 
 
         
-        List<Event> events = service.findByMultType(text, text1,text2,text3,text4,text5,text6);
+        List<Event> events = service.findByMultType(text, text1,text2,text3,text4,text5,text6, text7);
         return ResponseEntity.ok().body(events);           
     }
 
@@ -178,7 +180,8 @@ public class EventResource {
     @RequestParam(value = "text3", defaultValue = "") String text3,
     @RequestParam(value = "text4", defaultValue = "") String text4,
     @RequestParam(value = "text5", defaultValue = "") String text5,
-    @RequestParam(value = "text6", defaultValue = "") String text6){
+    @RequestParam(value = "text6", defaultValue = "") String text6,
+    @RequestParam(value = "text7", defaultValue = "") String text7){
             
         text = Search.decode(text);
         text1 = Search.decode(text1);
@@ -187,11 +190,12 @@ public class EventResource {
         text4 = Search.decode(text4);
         text5 = Search.decode(text5);
         text6 = Search.decode(text6);
+        text7 = Search.decode(text7);
 
      
 
         
-        List<Event> events =  service.findWeekType(text, text1, text2, text3, text4, text5,text6);
+        List<Event> events =  service.findWeekType(text, text1, text2, text3, text4, text5,text6, text7);
         return ResponseEntity.ok().body(events);           
     }
 
@@ -202,7 +206,8 @@ public class EventResource {
     @RequestParam(value = "text3", defaultValue = "") String text3,
     @RequestParam(value = "text4", defaultValue = "") String text4,
     @RequestParam(value = "text5", defaultValue = "") String text5,
-    @RequestParam(value = "text6", defaultValue = "") String text6){
+    @RequestParam(value = "text6", defaultValue = "") String text6,
+    @RequestParam(value = "text7", defaultValue = "") String text7){
             
         text = Search.decode(text);
         text1 = Search.decode(text1);
@@ -211,9 +216,10 @@ public class EventResource {
         text4 = Search.decode(text4);
         text5 = Search.decode(text5);
         text6 = Search.decode(text6);
+        text7 = Search.decode(text7);
 
         
-        List<Event> events =  service.findTodayType(text, text1, text2, text3, text4, text5,text6);
+        List<Event> events =  service.findTodayType(text, text1, text2, text3, text4, text5,text6,text7);
         return ResponseEntity.ok().body(events);           
     }
 
