@@ -27,10 +27,10 @@ public interface EventRepository extends MongoRepository<Event, String>{
     //@Query("{'dateEnd' : {$gte : ?0}}")
     List<Event> findByDateEndGreaterThanEqual(Date date);
 
-    @Query("{$and: [{'active': true},{'dateStart':{$lte: ?0}}, {'dateEnd': {$gte: ?0}}]}")
+    @Query("{$and: [{'active': true},{$and:[{'dateStart':{$lte: ?0}}, {'dateEnd': {$gte: ?0}}]}]}")
     List<Event> findToday(Date date);
 
-    @Query("{$and: [{'active': true}, {$or:[{'type':{$regex: ?1}},{'type': {$regex: ?2}},{'type': {$regex: ?3}},{'type': {$regex: ?4}},{'type': {$regex: ?5}},{'type': {$regex: ?6}}, {'type': {$regex: ?7}}]}]}")
+    @Query("{$and: [{'active': true}, {$or: [{'type':{$regex: ?0}},{'type':{$regex: ?1}},{'type':{$regex: ?2}},{'type':{$regex: ?3}},{'type':{$regex: ?4}},{'type':{$regex: ?5}},{'type':{$regex: ?6}},{'type':{$regex: ?7}}]}]}")
     List<Event> findByMultType(String text, String text1, String text2, String text3, String text4, String text5, String text6, String text7);
 
     @Query("{$and: [{'active': true},{'dateStart':{$lt: ?1}}, {'dateStart':{$gte: ?0}}, {'dateEnd': {$lte: ?1}}]}")
