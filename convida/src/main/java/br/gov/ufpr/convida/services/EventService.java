@@ -204,6 +204,7 @@ public class EventService{
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         Date minDate = new Date();
+        Date maxDate = new Date();
 
         minDate = new Date(minDate.getTime());
         try{
@@ -213,8 +214,19 @@ public class EventService{
         }catch(ParseException e){
         
         }
+        maxDate = new Date(maxDate.getTime() - 24 * 60 * 60 * 1000);
+        try{
+            String data = sdf.format(maxDate);
+            maxDate = sdf.parse(data);
 
-        return repo.findTodayType(minDate, text, text1, text2, text3, text4, text5, text6, text7);
+        }catch(ParseException e){
+        
+        }
+
+        
+        System.out.println(" -------------- DATA:  " + maxDate);
+
+        return repo.findTodayType(minDate, maxDate, text, text1, text2, text3, text4, text5, text6, text7);
     }
 
     
