@@ -64,4 +64,8 @@ public class UserService {
     public void delete(String id){
         repo.deleteById(id);
     }
+
+    public void turnadm(User user){
+        repo.save(user);
+    }
 }

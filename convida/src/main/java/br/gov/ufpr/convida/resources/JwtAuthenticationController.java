@@ -41,17 +41,16 @@ public class JwtAuthenticationController {
             throws Exception {
 
         if (authenticationRequest.getUsername().endsWith("@ufpr.br")) {
-            System.out.println(" ********* * ENTREI NO IF DO EMAIL @UFPR --------------*****");
+            
 
             LdapConnection auth = new LdapConnection();
             if (auth.connectToLDAP(authenticationRequest.getUsername(), authenticationRequest.getPassword()) == true) {
                 User newUser = user.findById(authenticationRequest.getUsername()).orElse(null);
-                System.out.println("----------- AUTENTIQUEI E VOLTEI PRA CA PRA FAZER O TOKEN ----------");
+                
                 if (newUser == null) {
                     User u = new User();
                     u.setGrr(authenticationRequest.getUsername());
                     u.setPassword(bcrypt.encode(authenticationRequest.getPassword()));
-                    System.out.println("------------------SENHA CRIPTOOO: " + u.getPassword());
                     user.insert(u);
 
                     authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
@@ -72,7 +71,6 @@ public class JwtAuthenticationController {
                 return ResponseEntity.status(401).build();
             }
         } else {
-            System.out.println("----------------- VAI AUTENTICAR LOCAL EM --------------");
 
             authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
             final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());

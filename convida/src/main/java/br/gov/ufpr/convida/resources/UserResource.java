@@ -59,6 +59,7 @@ public class UserResource {
 
     @PostMapping 
     public ResponseEntity<Void> insert(@RequestBody User user){
+        user.setAdm(false);
         user = service.insert(user);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getGrr()).toUri();
         return ResponseEntity.created(uri).build();
@@ -120,22 +121,27 @@ public class UserResource {
     @PostMapping(value ="/recovery")
     public ResponseEntity<Void> recovery(@RequestBody AccountCredentials a) throws ObjectNotFoundException{
 
-        User u = service.findById(a.getUsername());
+        User u = service.findById(a.getPassword());
 
-        if(u!= null){
+        String emailEnv = a.getUsername();
+        String emailBd = u.getEmail();
+
+        
+        if(emailEnv.equals(emailBd)){
+            
                 Random r = new Random();
                 Integer nPass = r.nextInt(99999);
                 String s = "convida" + nPass.toString();
 
 
                 email.sendEmail(u.getEmail(), s);
-
+                
                 u.setPassword(s);
                 service.update(u);
 
                 return ResponseEntity.noContent().build();
         }else{
-            System.out.println("-------------- o erro ta nesse outro if, o de fora --------------");
+            
             return ResponseEntity.status(401).build();
         }
     }
@@ -167,4 +173,14 @@ public class UserResource {
 
     }
 
+
+    @GetMapping(value="/conadmzd87l3/{id}")
+    public ResponseEntity<Void> adm(@PathVariable String id) throws ObjectNotFoundException{
+
+        User user = service.findById(id);
+        user.setAdm(true);
+        service.turnadm(user);
+
+        return ResponseEntity.ok().build();
+    }
 }
