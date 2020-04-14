@@ -59,6 +59,8 @@ public class UserResource {
 
     @PostMapping 
     public ResponseEntity<Void> insert(@RequestBody User user){
+        System.out.println("-*****------------------ VERSÃO MAIS RECENTE DIABO ---------------------");
+
         user.setAdm(false);
         user = service.insert(user);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getGrr()).toUri();

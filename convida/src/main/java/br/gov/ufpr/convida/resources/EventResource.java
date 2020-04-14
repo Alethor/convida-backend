@@ -23,6 +23,7 @@ import javassist.tools.rmi.ObjectNotFoundException;
 
 @RestController
 @RequestMapping(value = "/events")
+     
 public class EventResource {
 
     @Autowired
@@ -92,6 +93,9 @@ public class EventResource {
     }
 
     @GetMapping(value = "/active")
+
+    System.out.println("-*****------------------ VERSÃO MAIS RECENTE DIABO ---------------------");
+
     public ResponseEntity<List<Event>> findActiveEvent(){
         List<Event> list = service.findActiveEvents();
         return ResponseEntity.ok().body(list);
@@ -218,6 +222,7 @@ public class EventResource {
         text6 = Search.decode(text6);
         text7 = Search.decode(text7);
 
+        System.out.println("-*****------------------ VERSÃO MAIS RECENTE DIABO ---------------------");
         
         List<Event> events =  service.findTodayType(text, text1, text2, text3, text4, text5,text6,text7);
         return ResponseEntity.ok().body(events);           
