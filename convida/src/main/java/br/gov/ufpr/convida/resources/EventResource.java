@@ -94,8 +94,6 @@ public class EventResource {
 
     @GetMapping(value = "/active")
 
-    System.out.println("-*****------------------ VERSÃO MAIS RECENTE DIABO ---------------------");
-
     public ResponseEntity<List<Event>> findActiveEvent(){
         List<Event> list = service.findActiveEvents();
         return ResponseEntity.ok().body(list);
@@ -212,6 +210,8 @@ public class EventResource {
     @RequestParam(value = "text5", defaultValue = "") String text5,
     @RequestParam(value = "text6", defaultValue = "") String text6,
     @RequestParam(value = "text7", defaultValue = "") String text7){
+
+        System.out.println("-*****------------------ VERSÃO MAIS RECENTE DIABO ---------------------");
             
         text = Search.decode(text);
         text1 = Search.decode(text1);
