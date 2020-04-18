@@ -18,6 +18,7 @@ public class User implements Serializable{
     private String name;
     private String lastName;
     private String password;
+    @Indexed(unique = true)
     private String email;
     private Date birth;
     private Boolean adm = false;

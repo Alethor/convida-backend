@@ -91,7 +91,7 @@ public class EventService{
 
     public List<Event> findByNameType(String text, String type){
        
-        return repo.findByNameType(text,type);
+        return repo.findByNameTypeOrderByDateStart(text,type);
     }
 
     public List<Report> findReports(String id){
@@ -229,6 +229,7 @@ public class EventService{
         return repo.findTodayType(minDate, maxDate, text, text1, text2, text3, text4, text5, text6, text7);
     }
 
+    
     
 
 }

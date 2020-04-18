@@ -185,4 +185,5 @@ public class UserResource {
 
         return ResponseEntity.ok().build();
     }
+
 }
