@@ -5,7 +5,7 @@ FROM gradle:jdk8
 
 RUN git clone -b backup https://2d0411950c5c81d99d5b95d7ae736b393b513a59@github.com/Alethor/convida-backend.git
 
-RUN rm -r convida-backend/convida/build
+#RUN rm -r convida-backend/convida/build
 
 WORKDIR convida-backend/convida/
 RUN gradle build
