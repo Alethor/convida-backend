@@ -59,7 +59,6 @@ public class UserResource {
 
     @PostMapping 
     public ResponseEntity<Void> insert(@RequestBody User user){
-        System.out.println("-*****------------------ VERSÃO MAIS RECENTE DIABO ---------------------");
 
         user.setAdm(false);
         user = service.insert(user);
@@ -185,5 +184,18 @@ public class UserResource {
 
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping(value="/checkemail/{email}")
+    public ResponseEntity<Boolean> checkEmail(@PathVariable String email){
+        
+        Boolean r;
+    
+       r = service.findByEmail(email);
+
+       return ResponseEntity.status(200).body(r);
+
+    }
+
+
 
 }

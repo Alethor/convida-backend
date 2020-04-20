@@ -1,8 +1,6 @@
 package br.gov.ufpr.convida.config;
 
-import java.io.IOException;
 
-import javax.management.MBeanException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

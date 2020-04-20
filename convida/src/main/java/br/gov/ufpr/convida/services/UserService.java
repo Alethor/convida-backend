@@ -69,6 +69,22 @@ public class UserService {
         repo.save(user);
     }
 
+    public Boolean findByEmail(String email){
+        
+
+        User u = repo.findByEmail(email);
+
+        if(u == null){
+            return true;
+        }else{
+            return false;
+        }
+
+
+
+
+
+    }
 
 
 
