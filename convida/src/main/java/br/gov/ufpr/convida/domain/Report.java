@@ -5,6 +5,10 @@ import java.util.Objects;
 
 public class Report implements Serializable{
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private String grr;
     private String report;
 
