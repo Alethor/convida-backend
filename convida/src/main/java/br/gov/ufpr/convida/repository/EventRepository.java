@@ -21,7 +21,7 @@ public interface EventRepository extends MongoRepository<Event, String>{
 
     List<Event> findMyEventsByAuthor(String text);
 
-    @Query("{$sort: {'dateStart' : 1},$and:[{'active': true}, {'name':{$regex: ?0, $options: 'i'}}, {'type': {$regex: ?1, $options: 'i'}}]}")
+    @Query("$and:[{'active': true}, {'name':{$regex: ?0, $options: 'i'}}, {'type': {$regex: ?1, $options: 'i'}}]}")
     List<Event> findByNameTypeOrderByDateStart(String text, String type);
 
     //@Query("{'dateEnd' : {$gte : ?0}}")
