@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.gov.ufpr.convida.domain.Event;
 import br.gov.ufpr.convida.domain.Report;
+import br.gov.ufpr.convida.repository.ReportRepository;
 import br.gov.ufpr.convida.services.EventService;
 import javassist.tools.rmi.ObjectNotFoundException;
 
@@ -28,6 +29,9 @@ public class EventResource {
 
     @Autowired
     private EventService service;
+
+    @Autowired
+    private ReportRepository rerepo;
   
 
     @GetMapping
@@ -114,7 +118,7 @@ public class EventResource {
 
     @PutMapping(value = "/report/{id}")
     public ResponseEntity<Void> report(@PathVariable String id, @RequestBody Report report)  throws ObjectNotFoundException{
-       
+        rerepo.insert(report);
         service.report(id, report);
         return ResponseEntity.ok().build();
 
@@ -233,6 +237,25 @@ public class EventResource {
         List<Event> reported = service.findReported();
 
         return ResponseEntity.ok().body(reported);
+
+    }
+
+    @GetMapping(value="/ignore/{id}")
+    public ResponseEntity<Void> ignoreReport(@PathVariable String id) throws ObjectNotFoundException{
+
+        Report r = rerepo.findById(id).orElse(null);
+
+        if(r != null){
+            r.setIgnored(true);
+            rerepo.save(r);
+            return ResponseEntity.status(200).build();
+
+        }else{
+            return ResponseEntity.notFound().build();
+            
+        }
+
+
 
     }
 

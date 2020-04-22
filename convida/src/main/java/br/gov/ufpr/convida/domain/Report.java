@@ -3,14 +3,22 @@ package br.gov.ufpr.convida.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class Report implements Serializable{
 
     /**
      *
      */
     private static final long serialVersionUID = 1L;
+
+    @Id
+    private String id;
     private String grr;
     private String report;
+    private Boolean ignored;
 
     public Report(){}
 
@@ -34,6 +42,19 @@ public class Report implements Serializable{
         this.report = report;
     }
 
+
+    
+    public boolean isIgnored() {
+        return this.ignored;
+    }
+
+    public boolean getIgnored() {
+        return this.ignored;
+    }
+
+    public void setIgnored(Boolean ignored) {
+        this.ignored = ignored;
+    }
 
     
 
