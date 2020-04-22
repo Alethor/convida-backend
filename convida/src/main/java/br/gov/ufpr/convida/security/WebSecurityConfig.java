@@ -47,7 +47,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/events/{id}").permitAll()
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .antMatchers(HttpMethod.GET, "/users/{id}").permitAll().anyRequest().authenticated().and()
+                .antMatchers(HttpMethod.GET, "/users/{id}").permitAll()
+                .antMatchers(HttpMethod.POST, "/users/recovery").permitAll()
+                .antMatchers(HttpMethod.GET, "/users/checkemail/{email}").permitAll()
+                .anyRequest().authenticated().and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

@@ -23,6 +23,12 @@ dependencies {
   testImplementation('org.springframework.boot:spring-boot-starter-test') {
     exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
   }
+
+  implementation 'org.springframework.boot:spring-boot-starter-mail'
+  testImplementation('org.springframework.boot:spring-boot-starter-test') {
+    exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+  }
+  
   testImplementation 'org.springframework.security:spring-security-test'
   
   compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'

@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.gov.ufpr.convida.config.SendEmail;
 import br.gov.ufpr.convida.domain.AccountCredentials;
 import br.gov.ufpr.convida.domain.Bfav;
 import br.gov.ufpr.convida.domain.Event;
@@ -37,6 +39,11 @@ public class UserResource {
     @Autowired
     PasswordEncoder bcrypt;
 
+    @Autowired
+    private SendEmail email;
+
+   
+
 
     @GetMapping
     public ResponseEntity<List<User>> findAll(){
@@ -52,6 +59,8 @@ public class UserResource {
 
     @PostMapping 
     public ResponseEntity<Void> insert(@RequestBody User user){
+
+        user.setAdm(false);
         user = service.insert(user);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getGrr()).toUri();
         return ResponseEntity.created(uri).build();
@@ -70,6 +79,12 @@ public class UserResource {
         Boolean x =  bcrypt.matches(user.getPassword(), u.getPassword());
         return ResponseEntity.ok().body(x);  
 
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteuser(@PathVariable String id){
+        service.delete(id);
+        return ResponseEntity.status(200).build();
     }
     
 
@@ -104,6 +119,33 @@ public class UserResource {
         
     }
 
+    @PostMapping(value ="/recovery")
+    public ResponseEntity<Void> recovery(@RequestBody AccountCredentials a) throws ObjectNotFoundException{
+
+        User u = service.findById(a.getPassword());
+
+        String emailEnv = a.getUsername();
+        String emailBd = u.getEmail();
+
+        
+        if(emailEnv.equals(emailBd)){
+            
+                Random r = new Random();
+                Integer nPass = r.nextInt(99999);
+                String s = "convida" + nPass.toString();
+
+
+                email.sendEmail(u.getEmail(), s);
+                
+                u.setPassword(s);
+                service.update(u);
+
+                return ResponseEntity.noContent().build();
+        }else{
+            
+            return ResponseEntity.status(401).build();
+        }
+    }
 
     @PostMapping(value = "/rfav")
     public ResponseEntity<Void> delete(@RequestBody Bfav ids) throws ObjectNotFoundException {
@@ -131,5 +173,29 @@ public class UserResource {
        return ResponseEntity.ok().body(events);
 
     }
+
+
+    @GetMapping(value="/conadmzd87l3/{id}")
+    public ResponseEntity<Void> adm(@PathVariable String id) throws ObjectNotFoundException{
+
+        User user = service.findById(id);
+        user.setAdm(true);
+        service.turnadm(user);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value="/checkemail/{email}")
+    public ResponseEntity<Boolean> checkEmail(@PathVariable String email){
+        
+        Boolean r;
+    
+       r = service.findByEmail(email);
+
+       return ResponseEntity.status(200).body(r);
+
+    }
+
+
 
 }

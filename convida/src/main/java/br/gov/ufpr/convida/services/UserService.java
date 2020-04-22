@@ -61,4 +61,31 @@ public class UserService {
         newUser.setBirth(user.getBirth());
     }
 
+    public void delete(String id){
+        repo.deleteById(id);
+    }
+
+    public void turnadm(User user){
+        repo.save(user);
+    }
+
+    public Boolean findByEmail(String email){
+        
+
+        User u = repo.findByEmail(email);
+
+        if(u == null){
+            return true;
+        }else{
+            return false;
+        }
+
+
+
+
+
+    }
+
+
+
 }

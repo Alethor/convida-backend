@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import br.gov.ufpr.convida.domain.Event;
+import br.gov.ufpr.convida.domain.Report;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,6 +65,22 @@ public class EventService{
         repo.deleteById(id);
     }
 
+    public void report(String id, Report report) throws ObjectNotFoundException{
+        
+        Event newEvent = repo.findById(id).orElse(null);
+
+        
+        newEvent.getReports().add(report);
+        repo.save(newEvent);
+
+
+    }
+
+    public void deactivate(Event ev){
+        repo.save(ev);
+
+    }
+
     public List<Event> findByName(String text){
         return repo.findByName(text);
     }
@@ -74,7 +91,17 @@ public class EventService{
 
     public List<Event> findByNameType(String text, String type){
        
-        return repo.findByNameType(text,type);
+        return repo.findByNameTypeOrderByDateStart(text,type);
+    }
+
+    public List<Report> findReports(String id){
+        
+        Event ne = repo.findById(id).orElse(null);
+        return ne.getReports();
+    }
+
+    public List<Event> findReported(){
+        return repo.findByReportsNotNull();
     }
 
     public List<Event> findMyEvents(String text){
@@ -140,12 +167,12 @@ public class EventService{
         return repo.findWeek(minDate, maxDate);
     }
     
-    public List<Event> findByMultType(String text, String text1,String text2,String text3,String text4,String text5){
+    public List<Event> findByMultType(String text, String text1,String text2,String text3,String text4,String text5, String text6, String text7){
        
-        return repo.findByMultType(text,text1,text2, text3, text4,text5);
+        return repo.findByMultType(text,text1,text2, text3, text4,text5,text6,text7);
     }
 
-    public List<Event> findWeekType(String text, String text1,String text2,String text3,String text4,String text5){
+    public List<Event> findWeekType(String text, String text1,String text2,String text3,String text4,String text5,String text6, String text7){
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     
@@ -169,14 +196,15 @@ public class EventService{
         
         }
 
-        return repo.findWeekType(minDate, maxDate, text, text1, text2, text3, text4, text5);
+        return repo.findWeekType(minDate, maxDate, text, text1, text2, text3, text4, text5, text6, text7);
     }
 
-    public List<Event> findTodayType(String text, String text1,String text2,String text3,String text4,String text5){
+    public List<Event> findTodayType(String text, String text1,String text2,String text3,String text4,String text5, String text6, String text7){
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         Date minDate = new Date();
+        Date maxDate = new Date();
 
         minDate = new Date(minDate.getTime());
         try{
@@ -186,10 +214,22 @@ public class EventService{
         }catch(ParseException e){
         
         }
+        maxDate = new Date(maxDate.getTime() - 24 * 60 * 60 * 1000);
+        try{
+            String data = sdf.format(maxDate);
+            maxDate = sdf.parse(data);
 
-        return repo.findTodayType(minDate, text, text1, text2, text3, text4, text5);
+        }catch(ParseException e){
+        
+        }
+
+        
+        System.out.println(" -------------- DATA:  " + maxDate);
+
+        return repo.findTodayType(minDate, maxDate, text, text1, text2, text3, text4, text5, text6, text7);
     }
 
+    
     
 
 }

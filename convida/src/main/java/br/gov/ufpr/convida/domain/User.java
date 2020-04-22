@@ -7,8 +7,12 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+
+@Document
 public class User implements Serializable{
 
     private static final long serialVersionUID = 1L;
@@ -18,8 +22,12 @@ public class User implements Serializable{
     private String name;
     private String lastName;
     private String password;
+
+    @Indexed(unique = true)
+    
     private String email;
     private Date birth;
+    private Boolean adm = false;
 
     @DBRef(lazy = true)
     private List<Event> fav = new ArrayList<>();
@@ -87,6 +95,20 @@ public class User implements Serializable{
     public void setFav(List<Event> fav) {
         this.fav = fav;
     }
+
+    public boolean isAdm() {
+        return this.adm;
+    }
+
+    public boolean getAdm() {
+        return this.adm;
+    }
+
+    public void setAdm(Boolean adm) {
+        this.adm = adm;
+    }
+
+
 
 
     @Override

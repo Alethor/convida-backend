@@ -1,7 +1,9 @@
 package br.gov.ufpr.convida.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -38,11 +40,14 @@ public class Event implements Serializable{
     private double lng;   
     private String author;
     private String address;
+    private boolean active = true;
+    private List<Report> reports = new ArrayList<>();
   
 
     public Event(){
 
     }
+
 
 
     public String getId() {
@@ -183,6 +188,27 @@ public class Event implements Serializable{
     }
 
 
+
+    public List<Report> getReports() {
+        return this.reports;
+    }
+
+    public void setReports(List<Report> reports) {
+        this.reports = reports;
+    }
+
+    public boolean isActive() {
+        return this.active;
+    }
+
+    public boolean getActive() {
+        return this.active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+   
 
     @Override
     public boolean equals(Object o) {
