@@ -45,6 +45,5 @@ public interface EventRepository extends MongoRepository<Event, String>{
     @Query("{'active': true}")
     List<Event> findAll();
 
-    @Query("{'reports.ignored': false}")
     List<Event> findByReportsNotNull();
 }

@@ -235,7 +235,6 @@ public class EventResource {
     @GetMapping(value = "/reported")
     public ResponseEntity<List<Event>> findReported(){
         List<Event> reported = service.findReported();
-
         return ResponseEntity.ok().body(reported);
 
     }
@@ -248,6 +247,7 @@ public class EventResource {
         if(r != null){
             r.setIgnored(true);
             rerepo.save(r);
+            System.out.println("objeto report ------------------------: " + r.getIgnored());
             return ResponseEntity.status(200).build();
 
         }else{
