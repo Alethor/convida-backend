@@ -23,8 +23,13 @@ public class Report implements Serializable{
     public Report(){}
 
 
+    public String getId(){
+        return this.id;
+    }
 
-
+    public void setId(String id){
+        this.id = id;
+    }
 
     public String getGrr() {
         return this.grr;
