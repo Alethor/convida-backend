@@ -58,6 +58,7 @@ public class EventService{
         newObj.setHrStart(event.getHrStart());
         newObj.setHrEnd(event.getHrEnd());
         newObj.setAddress(event.getAddress());
+        newObj.setOnline(event.getOnline());
     }
 
     public void delete (String id) throws ObjectNotFoundException {
