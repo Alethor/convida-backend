@@ -70,7 +70,7 @@ public class EventService{
         
         Event newEvent = repo.findById(id).orElse(null);
 
-        
+        newEvent.setReported(true);
         newEvent.getReports().add(report);
         repo.save(newEvent);
 

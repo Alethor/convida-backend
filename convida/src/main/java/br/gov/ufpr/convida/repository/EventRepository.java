@@ -48,5 +48,6 @@ public interface EventRepository extends MongoRepository<Event, String>{
     @Query("{'active': true}")
     List<Event> findAll();
 
+    @Query("{'reported': true}")
     List<Event> findByReportsNotNull();
 }

@@ -43,6 +43,7 @@ public class Event implements Serializable{
     private String address;
     private boolean active = true;
     private boolean online = false;
+    private boolean reported = false;
 
     @DBRef
     private List<Report> reports = new ArrayList<>();
@@ -225,6 +226,19 @@ public class Event implements Serializable{
         this.online = online;
     }
 
+    public boolean isReported() {
+        return this.reported;
+    }
+
+    public boolean getReported() {
+        return this.reported;
+    }
+
+    public void setReported(boolean reported) {
+        this.reported = reported;
+    }
+
+    
 
     @Override
     public boolean equals(Object o) {
