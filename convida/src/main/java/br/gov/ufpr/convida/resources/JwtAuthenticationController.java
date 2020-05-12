@@ -68,7 +68,7 @@ public class JwtAuthenticationController {
                     return ResponseEntity.ok(new JwtResponse(token));
                 }
             } else {
-                return ResponseEntity.status(401).build();
+                return ResponseEntity.status(405).build();
             }
         } else {
 
