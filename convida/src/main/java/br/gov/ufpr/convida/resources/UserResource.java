@@ -163,7 +163,12 @@ public class UserResource {
     public ResponseEntity<List<Event>> findFav(@PathVariable String id) throws ObjectNotFoundException {
         
         User user = service.findById(id);
-        return ResponseEntity.ok().body(user.getFav());
+        List<Event> fav = user.getFav();
+        if(fav == null){
+            return ResponseEntity.status(404).build();
+        }else{
+        return ResponseEntity.ok().body(fav);
+        }
     }
 
     @GetMapping(value ="/myevents")
