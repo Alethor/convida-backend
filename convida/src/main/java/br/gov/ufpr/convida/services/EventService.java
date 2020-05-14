@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 
 import br.gov.ufpr.convida.domain.Event;
 import br.gov.ufpr.convida.domain.Report;
@@ -27,8 +27,8 @@ public class EventService{
     }
 
     public Event findById(String id) throws ObjectNotFoundException {
-        Optional <Event> event = repo.findById(id);
-        return event.orElseThrow(() -> new ObjectNotFoundException("Este evento não existe em nossa base de dados"));
+        Event event = repo.findById(id).orElse(null);
+        return event;
 
     }
 
