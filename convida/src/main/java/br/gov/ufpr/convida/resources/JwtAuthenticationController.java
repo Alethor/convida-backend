@@ -51,6 +51,7 @@ public class JwtAuthenticationController {
                     User u = new User();
                     u.setGrr(authenticationRequest.getUsername());
                     u.setPassword(bcrypt.encode(authenticationRequest.getPassword()));
+                    u.setEmail(authenticationRequest.getUsername());
                     user.insert(u);
 
                     authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
