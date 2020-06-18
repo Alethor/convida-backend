@@ -5,6 +5,7 @@ import br.gov.ufpr.convida.domain.Event;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -21,11 +22,17 @@ public interface EventRepository extends MongoRepository<Event, String>{
 
     List<Event> findMyEventsByAuthor(String text);
 
-    @Query("{$and:[{'active': true}, {'name':{$regex: ?0, $options: 'i'}}, {'type': {$regex: ?1, $options: 'i'}}]}")
-    List<Event> findByNameTypeOrderByDateStart(String text, String type);
+    @Query("{$and:[{'active': true}, {'name':{$regex: ?0, $options: 'i'}}, {'type': {$regex: ?1, $options: 'i'}}, {'dateStart':{$gte: ?2}}]}")
+    List<Event> findByNameTypeGte(String text, String type, Date date, Sort sort);
 
-    @Query("{$and:[{'online': true}, {'active': true}, {'name':{$regex: ?0, $options: 'i'}}, {'type': {$regex: ?1, $options: 'i'}}]}")
-    List<Event> findByNameTypeOnline(String text, String type);
+     @Query("{$and:[{'active': true}, {'name':{$regex: ?0, $options: 'i'}}, {'type': {$regex: ?1, $options: 'i'}}, {'dateStart':{$lt: ?2}}]}")
+    List<Event> findByNameTypeLt(String text, String type, Date date, Sort sort);
+
+    @Query("{$and:[{'online': true}, {'active': true}, {'name':{$regex: ?0, $options: 'i'}}, {'type': {$regex: ?1, $options: 'i'}}, {'dateStart':{$gte: ?2}}]}")
+    List<Event> findByNameTypeOnlineGte(String text, String type, Date date, Sort sort);
+
+    @Query("{$and:[{'online': true}, {'active': true}, {'name':{$regex: ?0, $options: 'i'}}, {'type': {$regex: ?1, $options: 'i'}}, {'dateStart':{$lt: ?2}}]}")
+    List<Event> findByNameTypeOnlineLt(String text, String type, Date date, Sort sort);
 
     //@Query("{'dateEnd' : {$gte : ?0}}")
     List<Event> findByDateEndGreaterThanEqual(Date date);

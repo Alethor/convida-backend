@@ -2,14 +2,15 @@ package br.gov.ufpr.convida.services;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 
 import br.gov.ufpr.convida.domain.Event;
 import br.gov.ufpr.convida.domain.Report;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
@@ -23,6 +24,7 @@ public class EventService{
     private EventRepository repo;
 
     public List<Event> findAll(){
+        
         return repo.findAll();
     }
 
@@ -92,12 +94,47 @@ public class EventService{
 
     public List<Event> findByNameType(String text, String type){
        
-        return repo.findByNameTypeOrderByDateStart(text,type);
-    }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        date = new Date(date.getTime());
+        ArrayList<Event> events = new ArrayList();
+        Sort sort = new Sort(Sort.Direction.ASC, "dateStart");
+        Sort sortlt = new Sort(Sort.Direction.DESC, "dateStart");
+       
+        try{
+            String data = sdf.format(date);
+            date = sdf.parse(data);
+
+        }catch(ParseException e){       
+
+     }
+
+         events.addAll(repo.findByNameTypeGte(text,type,date,sort));
+         events.addAll(repo.findByNameTypeLt(text,type,date,sortlt));
+
+         return events;
+}
 
     public List<Event> findByNameTypeOnline(String text, String type){
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        date = new Date(date.getTime());
+        ArrayList<Event> events = new ArrayList();
+        Sort sort = new Sort(Sort.Direction.ASC, "dateStart");
+        Sort sortlt = new Sort(Sort.Direction.DESC, "dateStart");
        
-        return repo.findByNameTypeOnline(text,type);
+        try{
+            String data = sdf.format(date);
+            date = sdf.parse(data);
+
+        }catch(ParseException e){       
+
+     }
+        events.addAll(repo.findByNameTypeOnlineGte(text,type,date,sort));
+        events.addAll(repo.findByNameTypeOnlineLt(text,type,date,sortlt));
+
+        return events;
     }
 
 
