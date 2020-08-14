@@ -63,7 +63,7 @@ public class JwtAuthenticationController {
                     System.out.println("Password: " + userDetails.getPassword());
                     
                     final String token = jwtTokenUtil.generateToken(userDetails);
-                    return ResponseEntity.ok().body(new JwtResponse(token) + idUsuario);
+                    return ResponseEntity.ok(new JwtResponse(token));
 
                 } else {
                 	
@@ -71,7 +71,7 @@ public class JwtAuthenticationController {
                     final UserDetails userDetails = userDetailsService
                             .loadUserByUsername(authenticationRequest.getUsername());
                     final String token = jwtTokenUtil.generateToken(userDetails);
-                    return ResponseEntity.ok().body(new JwtResponse(token) + newUser.getId());
+                    return ResponseEntity.ok(new JwtResponse(token));
                 }
             } else {
                 return ResponseEntity.status(405).build();
