@@ -63,15 +63,15 @@ public class JwtAuthenticationController {
                     System.out.println("Password: " + userDetails.getPassword());
                     
                     final String token = jwtTokenUtil.generateToken(userDetails);
-                    return ResponseEntity.ok(new JwtResponse(token));
+                    return ResponseEntity.ok().body(new JwtResponse(token) + idUsuario);
 
                 } else {
-                	System.out.println("New User: " + newUser.getName());
+                	
                     authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
                     final UserDetails userDetails = userDetailsService
                             .loadUserByUsername(authenticationRequest.getUsername());
                     final String token = jwtTokenUtil.generateToken(userDetails);
-                    return ResponseEntity.ok(new JwtResponse(token));
+                    return ResponseEntity.ok().body(new JwtResponse(token) + newUser.getId());
                 }
             } else {
                 return ResponseEntity.status(405).build();
