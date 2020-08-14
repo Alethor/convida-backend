@@ -18,7 +18,8 @@ public class User implements Serializable{
     private static final long serialVersionUID = 1L;
     
     @Id
-    private String grr;
+    private String id;
+    private String login;
     private String name;
     private String lastName;
     private String password;
@@ -38,15 +39,49 @@ public class User implements Serializable{
     }    
 
 
-    public String getGrr() {
-        return this.grr;
-    }
+    
 
-    public void setGrr(String grr) {
-        this.grr = grr;
-    }
+  
 
-    public String getName() {
+
+
+	public String getId() {
+		return id;
+	}
+
+
+
+
+
+
+
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
+
+
+
+
+
+
+	public String getLogin() {
+		return login;
+	}
+
+
+
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+
+
+
+	public String getName() {
         return this.name;
     }
 
@@ -119,12 +154,12 @@ public class User implements Serializable{
             return false;
         }
         User user = (User) o;
-        return Objects.equals(grr, user.grr);
+        return Objects.equals(id, user.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(grr);
+        return Objects.hashCode(id);
     }
 
 

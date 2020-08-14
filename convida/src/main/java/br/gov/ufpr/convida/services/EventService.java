@@ -97,7 +97,7 @@ public class EventService{
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         date = new Date(date.getTime());
-        ArrayList<Event> events = new ArrayList();
+        ArrayList<Event> events = new ArrayList<Event>();
         Sort sort = new Sort(Sort.Direction.ASC, "dateStart");
         Sort sortlt = new Sort(Sort.Direction.DESC, "dateStart");
        
@@ -268,9 +268,6 @@ public class EventService{
         }catch(ParseException e){
         
         }
-
-        
-        System.out.println(" -------------- DATA:  " + maxDate);
 
         return repo.findTodayType(minDate, maxDate, text, text1, text2, text3, text4, text5, text6);
     }

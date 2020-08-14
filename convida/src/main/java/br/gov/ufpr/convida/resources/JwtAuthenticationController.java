@@ -45,20 +45,21 @@ public class JwtAuthenticationController {
 
             LdapConnection auth = new LdapConnection();
             if (auth.connectToLDAP(authenticationRequest.getUsername(), authenticationRequest.getPassword()) == true) {
-                User newUser = user.findById(authenticationRequest.getUsername()).orElse(null);
+                User newUser = user.findByLogin(authenticationRequest.getUsername());
                 
                 if (newUser == null) {
                     User u = new User();
-                    u.setGrr(authenticationRequest.getUsername());
+                    u.setLogin((authenticationRequest.getUsername()));
                     u.setPassword(bcrypt.encode(authenticationRequest.getPassword()));
                     u.setEmail(authenticationRequest.getUsername());
                     user.insert(u);
+                    String idUsuario = u.getId();
 
                     authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
                     final UserDetails userDetails = userDetailsService
                             .loadUserByUsername(authenticationRequest.getUsername());
                     final String token = jwtTokenUtil.generateToken(userDetails);
-                    return ResponseEntity.ok(new JwtResponse(token));
+                    return ResponseEntity.ok(new JwtResponse(token) + idUsuario);
 
                 } else {
 

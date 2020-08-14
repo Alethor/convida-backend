@@ -48,7 +48,7 @@ public class UserService {
     }
 
     public User update(User user){
-        User newUser = repo.findById(user.getGrr()).orElse(null);
+        User newUser = repo.findById(user.getId()).orElse(null);
         updateData(newUser, user);
         return repo.save(newUser);
     }

@@ -62,13 +62,13 @@ public class UserResource {
 
         user.setAdm(false);
         user = service.insert(user);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getGrr()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<Void> update(@RequestBody User user, @PathVariable String id){
-        user.setGrr(id);
+        user.setId(id);
         user = service.update(user);
         return ResponseEntity.noContent().build();
     }
