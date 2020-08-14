@@ -66,7 +66,7 @@ public class JwtAuthenticationController {
                     return ResponseEntity.ok(new JwtResponse(token));
 
                 } else {
-
+                	System.out.println("New User: " + newUser.getName());
                     authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
                     final UserDetails userDetails = userDetailsService
                             .loadUserByUsername(authenticationRequest.getUsername());
