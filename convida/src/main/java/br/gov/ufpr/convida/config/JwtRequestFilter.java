@@ -44,7 +44,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 System.out.println("JWT Token has expired");
             }
         } else {
-            logger.warn("JWT DOES NOT BEGIN WITH BEARER");
+            
         }
         // Once we get the token validate it.
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
