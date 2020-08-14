@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import br.gov.ufpr.convida.config.JwtTokenUtil;
 import br.gov.ufpr.convida.domain.AccountCredentials;
 import br.gov.ufpr.convida.domain.JwtResponse;
+import br.gov.ufpr.convida.domain.RespostaLogin;
 import br.gov.ufpr.convida.domain.User;
 import br.gov.ufpr.convida.repository.UserRepository;
 import br.gov.ufpr.convida.security.LdapConnection;
@@ -59,19 +60,32 @@ public class JwtAuthenticationController {
                     final UserDetails userDetails = userDetailsService
                             .loadUserByUsername(authenticationRequest.getUsername());
                     
-                    System.out.println("Username: " + userDetails.getUsername());
-                    System.out.println("Password: " + userDetails.getPassword());
+      
+                    
+                    RespostaLogin r = new RespostaLogin();
+                   
                     
                     final String token = jwtTokenUtil.generateToken(userDetails);
-                    return ResponseEntity.ok(new JwtResponse(token));
+                    
+                    r.setIdUsuario(idUsuario);
+                    r.setToken(token);
+                    
+                    return ResponseEntity.ok().body(r);
 
                 } else {
+     
                 	
                     authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
                     final UserDetails userDetails = userDetailsService
                             .loadUserByUsername(authenticationRequest.getUsername());
                     final String token = jwtTokenUtil.generateToken(userDetails);
-                    return ResponseEntity.ok(new JwtResponse(token));
+                    
+                    RespostaLogin r = new RespostaLogin();
+                    r.setIdUsuario(newUser.getId());
+                    r.setToken(token);
+                    
+                    
+                    return ResponseEntity.ok().body(r);
                 }
             } else {
                 return ResponseEntity.status(405).build();
