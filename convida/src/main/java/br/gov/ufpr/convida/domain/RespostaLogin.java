@@ -2,7 +2,7 @@ package br.gov.ufpr.convida.domain;
 
 public class RespostaLogin {
 	private String token;
-	private String idUsuario;
+	private String userId;
 	
 	
 	
@@ -13,12 +13,14 @@ public class RespostaLogin {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	public String getIdUsuario() {
-		return idUsuario;
+	public String getUserId() {
+		return userId;
 	}
-	public void setIdUsuario(String idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
+	
+	
 	
 	
 	
