@@ -120,6 +120,7 @@ public class JwtAuthenticationController {
         				User u = new User();
                         u.setLogin((authenticationRequest.getUsername()));
                         u.setPassword(bcrypt.encode(authenticationRequest.getPassword()));
+                        u.setEmail(authenticationRequest.getUsername());
                         user.insert(u);
                         
                         String userId = u.getId();
