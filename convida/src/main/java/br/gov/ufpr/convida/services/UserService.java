@@ -25,10 +25,15 @@ public class UserService {
         return repo.findAll();
     }
 
-    public User findById(String id) throws ObjectNotFoundException {
-        User user = repo.findById(id).orElseThrow(() -> new ObjectNotFoundException("Usuário não cadastrado"));
+    public User findById(String id) {
+        User user = repo.findById(id).orElse(null);
         return user;
 
+    }
+    
+    public User findByLogin(String login){
+    	User user = repo.findByLogin(login);
+    	return user;
     }
 
     public User insert(User user) {
