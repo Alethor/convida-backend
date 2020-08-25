@@ -23,7 +23,7 @@ public class LdapConnection {
 
         Hashtable<String, String> env = new Hashtable<>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        env.put(Context.PROVIDER_URL, "ldap://ldap.agtic.ufpr.br:389");
+        env.put(Context.PROVIDER_URL, "ldap://200.17.209.253:389");
         env.put(Context.SECURITY_AUTHENTICATION, "simple");
         env.put(Context.SECURITY_PRINCIPAL, "uid="+u[0]+" , ou=people, dc=ufpr,dc=br");
         env.put(Context.SECURITY_CREDENTIALS, password);
