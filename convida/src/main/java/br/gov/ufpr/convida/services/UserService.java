@@ -61,8 +61,8 @@ public class UserService {
     public void updateData(User newUser, User user){
         newUser.setName(user.getName());
         newUser.setLastName(user.getLastName());
+        newUser.setLogin(user.getLogin());
         newUser.setEmail(user.getEmail());
-        newUser.setPassword(bcrypt.encode(user.getPassword()));
         newUser.setBirth(user.getBirth());
     }
 
