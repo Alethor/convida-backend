@@ -95,7 +95,20 @@ public class JwtAuthenticationController {
             } else {
                 return ResponseEntity.status(405).build();
             }
-        } else {
+        } else if(authenticationRequest.getUsername().endsWith("@divulgacao.ufpr")){
+        	
+        	User newUser = user.findByLogin(authenticationRequest.getUsername());
+        	
+        	authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+        	RespostaLogin r = new RespostaLogin();
+			final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+			final String token = jwtTokenUtil.generateToken(userDetails);
+			r.setUserId(newUser.getId());
+			r.setToken(token);
+			return ResponseEntity.ok().body(r);
+        	
+        	
+        }else {
         	
         		String url = "https://www.prppg.ufpr.br/siga/autenticacaoterceiros/discente/graduacao";
         		
