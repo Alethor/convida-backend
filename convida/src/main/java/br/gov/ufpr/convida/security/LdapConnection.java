@@ -19,7 +19,7 @@ public class LdapConnection {
         String[] u = user.split("@");
         Hashtable<String, String> env = new Hashtable<>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        env.put(Context.PROVIDER_URL, "ldap:/"+url+":389");
+        env.put(Context.PROVIDER_URL, "ldap://"+url+":389");
         env.put(Context.SECURITY_AUTHENTICATION, "simple");
         env.put(Context.SECURITY_PRINCIPAL, "uid="+u[0]+" , ou=people, dc=ufpr,dc=br");
         env.put(Context.SECURITY_CREDENTIALS, password);
