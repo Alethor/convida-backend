@@ -13,24 +13,18 @@ import java.util.Hashtable;
 
 public class LdapConnection {
 
-    public boolean connectToLDAP(String user, String password) throws NamingException{
+    public boolean connectToLDAP(String user, String password, String url) throws NamingException{
         try{
-            System.out.println("CHEGUEI AQUI PO --------");
 
-            String[] u = user.split("@");
-            System.out.println(" ----- NOME ------------- : " + u[0]);
-            
-
+        String[] u = user.split("@");
         Hashtable<String, String> env = new Hashtable<>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        env.put(Context.PROVIDER_URL, "ldap://200.17.209.253:389");
+        env.put(Context.PROVIDER_URL, "ldap:/"+url+":389");
         env.put(Context.SECURITY_AUTHENTICATION, "simple");
         env.put(Context.SECURITY_PRINCIPAL, "uid="+u[0]+" , ou=people, dc=ufpr,dc=br");
         env.put(Context.SECURITY_CREDENTIALS, password);
         env.put("com.sun.jndi.ldap.connect.timeout", "10000");
-       
-        //"+user+ "
-       
+
         DirContext ctx = new InitialDirContext(env);
         
         System.out.println(" ---------------- Success---------------------");
@@ -38,7 +32,7 @@ public class LdapConnection {
         ctx.close();
         return true;   
         
-        }catch (NamingException e){
+        }catch (NamingException e){	
             e.printStackTrace();
             return false;
         }

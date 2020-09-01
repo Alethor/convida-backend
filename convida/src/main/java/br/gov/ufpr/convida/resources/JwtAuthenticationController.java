@@ -50,50 +50,19 @@ public class JwtAuthenticationController {
             
 
             LdapConnection auth = new LdapConnection();
-            if (auth.connectToLDAP(authenticationRequest.getUsername(), authenticationRequest.getPassword()) == true) {
-                User newUser = user.findByLogin(authenticationRequest.getUsername());
-                
-                if (newUser == null) {
-                    User u = new User();
-                    u.setLogin((authenticationRequest.getUsername()));
-                    u.setPassword(bcrypt.encode(authenticationRequest.getPassword()));
-                    u.setEmail(authenticationRequest.getUsername());
-                    user.insert(u);
-                    String userId = u.getId();
-
-                    
-                    final UserDetails userDetails = userDetailsService
-                            .loadUserByUsername(authenticationRequest.getUsername());
-                    
-      
-                    
-                    RespostaLogin r = new RespostaLogin();
-                   
-                    
-                    final String token = jwtTokenUtil.generateToken(userDetails);
-                    
-                    r.setUserId(userId);
-                    r.setToken(token);
-                    
-                    return ResponseEntity.ok().body(r);
-
-                } else {
-     
-                	
-                   
-                    final UserDetails userDetails = userDetailsService
-                            .loadUserByUsername(authenticationRequest.getUsername());
-                    final String token = jwtTokenUtil.generateToken(userDetails);
-                    
-                    RespostaLogin r = new RespostaLogin();
-                    r.setUserId(newUser.getId());
-                    r.setToken(token);
-                    
-                    
-                    return ResponseEntity.ok().body(r);
-                }
-            } else {
-                return ResponseEntity.status(405).build();
+            if (auth.connectToLDAP(authenticationRequest.getUsername(), authenticationRequest.getPassword(), "200.17.209.253") == true) {
+            	
+            	RespostaLogin r = ldapUser(authenticationRequest.getUsername(),authenticationRequest.getPassword());
+            	return ResponseEntity.ok().body(r);
+           
+            } else if(auth.connectToLDAP(authenticationRequest.getUsername(), authenticationRequest.getPassword(), "200.17.209.252") == true) {
+            
+            	RespostaLogin r = ldapUser(authenticationRequest.getUsername(),authenticationRequest.getPassword());
+            	return ResponseEntity.ok().body(r);
+           
+            }else{
+            	return ResponseEntity.status(405).build();
+         
             }
         } else if(authenticationRequest.getUsername().endsWith("@divulgacao.ufpr")){
         	
@@ -165,6 +134,46 @@ public class JwtAuthenticationController {
         		}			
         }
         		
+    }
+    
+    
+    private RespostaLogin ldapUser(String username, String password){
+    	
+    	User newUser = user.findByLogin(username);
+        
+        if (newUser == null) {
+            User u = new User();
+            u.setLogin((username));
+            u.setPassword(bcrypt.encode(password));
+            u.setEmail(username);
+            user.insert(u);
+            String userId = u.getId();
+
+            
+            final UserDetails userDetails = userDetailsService
+                    .loadUserByUsername(username);
+                        
+            RespostaLogin r = new RespostaLogin();
+           
+            
+            final String token = jwtTokenUtil.generateToken(userDetails);
+            
+            r.setUserId(userId);
+            r.setToken(token);
+            return r;
+        } else {
+
+            final UserDetails userDetails = userDetailsService
+                    .loadUserByUsername(username);
+            final String token = jwtTokenUtil.generateToken(userDetails);
+            
+            RespostaLogin r = new RespostaLogin();
+            r.setUserId(newUser.getId());
+            r.setToken(token);
+            
+            
+            return r;
+        }
     }
 
     private void authenticate(String username, String password) throws Exception {
