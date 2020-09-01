@@ -15,7 +15,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtTokenUtil implements Serializable {
     private static final long serialVersionUID = -2550185165626007488L;
-    public static final long JWT_TOKEN_VALIDITY = 1 * 60 * 60;
+    public static final long JWT_TOKEN_VALIDITY =  31536000 * 5 ;
     @Value("${jwt.secret}")
     private String secret;
 
@@ -42,6 +42,7 @@ public class JwtTokenUtil implements Serializable {
     // check if the token has expired
     private Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
+        System.out.println("Expiração do Token: " + expiration);
         return expiration.before(new Date());
     }
 
